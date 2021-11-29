@@ -6,13 +6,14 @@ import os
 
 import keras
 from keras.layers import  *
-import tensorflow as tf
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from mtcnn import MTCNN
 
 from keras.models import load_model
 
-model = load_model("../model/fas.h5")
+model = load_model("HyperFAS/model/fas.h5")
 
 
 
@@ -32,11 +33,7 @@ def test_one(X):
 
 def test_camera(mtcnn,index = 0):
 
-    cam=cv2.VideoCapture(0)
-
-    while(1):
-        success, frame = cam.read()
-        if success:
+            frame=cv2.imread('new1.png')
             image = frame
 
             img_size = np.asarray(image.shape)[0:2]
@@ -82,20 +79,12 @@ def test_camera(mtcnn,index = 0):
                     else:
                         cv2.rectangle(frame, (x1,y1) ,(x2,y2) , (255,0,0)  ,2)
 
-            cv2.imshow("image", image)
-            if cv2.waitKey(1) & 0XFF == ord('q'):
-                cv2.destroyAllWindows()
-                cam.release()
-                break                
-        
-        else:
-            cv2.destroyAllWindows()
-            cam.release()
-            break
+
+    
 
 if __name__ == '__main__':
     
-    mtcnn = load_mtcnn_model("../model/mtcnn.pb")
+    mtcnn = load_mtcnn_model("HyperFAS/model/mtcnn.pb")
 
     test_camera(mtcnn)
 

@@ -1,4 +1,5 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 class MTCNN:
 
     def __init__(self, model_path, min_size=160, factor=0.709, thresholds=[0.7, 0.8, 0.9]):
